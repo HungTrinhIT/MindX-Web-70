@@ -9,8 +9,8 @@ export const posts = [
   {
     userId: 1,
     id: "b5afaf89-f1a7-481a-b810-47e238796b2c",
-    title: "qui est esse",
-    body: "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
+    title: "Việt Nam đá world cup nữ Bồ Đào Nha",
+    body: "Việt nam chiến thắng 1-0, và dành vé vào vòng 1/16",
   },
   {
     userId: 1,
