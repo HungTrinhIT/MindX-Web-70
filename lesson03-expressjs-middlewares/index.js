@@ -59,10 +59,46 @@ app.post("/api/v1/posts", (req, res) => {
 });
 
 // Update a post
-app.put("/api/v1/posts/:id", (req, res) => {});
+app.put("/api/v1/posts/:id", (req, res) => {
+  const postId = req.params.id;
+  const body = req.body;
+
+  const existingPostIndex = posts.findIndex((post) => post.id === postId);
+
+  if (existingPostIndex === -1) {
+    return res.json({
+      message: "Resource is not exist",
+    });
+  }
+
+  const updatedPost = {
+    ...posts[existingPostIndex],
+    ...body,
+  };
+
+  posts[existingPostIndex] = updatedPost;
+
+  return res.json({
+    message: "Update successfully",
+  });
+});
 
 // Delete post
-app.delete("/api/v1/posts/:id", (req, res) => {});
+app.delete("/api/v1/posts/:id", (req, res) => {
+  const postId = req.params.id;
+  const existingPostIndex = posts.findIndex((post) => post.id === postId);
+  if (existingPostIndex === -1) {
+    return res.json({
+      message: "Resource is not exist",
+    });
+  }
+
+  posts.splice(existingPostIndex, 1);
+
+  return res.json({
+    message: "Delete successfully",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`);
