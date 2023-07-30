@@ -1,5 +1,6 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
+import logAPI from "../middlewares/logAPI.js";
 
 import { posts } from "../utils/mockData.js";
 
@@ -12,6 +13,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
+  const currentDate = new Date();
   const postId = req.params.id;
 
   const existingPost = posts.find((post) => post.id === postId);
