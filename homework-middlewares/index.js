@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routes/index.js";
-import { stats } from "./middlewares/stats.middleware.js";
+
+import { apiLogMiddleware } from "./middlewares/apiLog.middleware.js";
 
 const app = express();
 const PORT = 3001;
@@ -12,11 +13,14 @@ export const users = [
   { username: "charlie", apiKey: "charlie@123" },
 ];
 
-app.use(`/api/v${API_VERSION}`, router);
+export const stats = [];
 
-app.get("/system/statistic", (req, res) => {
-  return res.json(stat);
+router.use(apiLogMiddleware);
+
+app.get(`/api/v${API_VERSION}/system/statistic`, (req, res) => {
+  return res.json(stats);
 });
+app.use(`/api/v${API_VERSION}`, router);
 
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`);

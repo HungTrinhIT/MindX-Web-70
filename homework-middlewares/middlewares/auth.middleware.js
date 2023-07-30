@@ -1,6 +1,6 @@
 import { users } from "../index.js";
 
-export const authenticateMiddleware = (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
   const api_key = req.query.api_key;
 
   if (!api_key) {
