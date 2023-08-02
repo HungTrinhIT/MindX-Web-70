@@ -13,8 +13,14 @@ export const authMiddleware = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     next();
   } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(403).json({
+        message: "Token is expired",
+      });
+    }
+
     return res.status(401).json({
-      error,
+      message: "Token is not valid",
     });
   }
 };
