@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import appRouter from "./routes/index.js";
 

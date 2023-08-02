@@ -37,13 +37,13 @@ router.post("/login", (req, res) => {
     (u) => u.username === username || u.password === password
   );
 
+  console.log("env:", process.env.PORT, process.env.JWT_SECRET_KEY);
+
   if (!existingUser) {
     return res.status(401).json({
       message: "Invalid password or username!",
     });
   }
-
-  const JWT_PRIVATE_KEY = "MINDX_PRIVATE_KEY";
 
   const userWithoutPassword = {
     username: existingUser.username,
@@ -55,7 +55,7 @@ router.post("/login", (req, res) => {
   // 1. Header: thông tin thuật toán mã hoá, loại token
   // 2. Payload: thông tin user đính kèm
   // 3. Footer: thông tin liên quan đến signature (mã hoá công khai)
-  const token = jwt.sign(userWithoutPassword, JWT_PRIVATE_KEY, {
+  const token = jwt.sign(userWithoutPassword, process.env.JWT_SECRET_KEY, {
     expiresIn: "30s",
   });
 
