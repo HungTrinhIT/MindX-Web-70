@@ -2,71 +2,61 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-const userMockData = [
-  {
-    id: "1",
-    username: "alice",
-    password: "alice@123",
-    fullname: "Alice H",
-  },
-  {
-    id: "2",
-    username: "bob",
-    password: "bob@123",
-    fullname: "Bobby",
-  },
-  {
-    id: "3",
-    username: "Charlie",
-    password: "charlie@123",
-    fullname: "Charlie Put",
-  },
-];
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-router.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  try {
+    //   1. Validation
+    if (!email || !password) {
+      return res.status(400).json({
+        message: "Missing required keys",
+      });
+    }
 
-  //   1. Validation
-  if (!username || !password) {
-    return res.status(400).json({
-      message: "Missing required keys",
+    //   2. Check authentication
+    const existingUser = await UserModel.findOne({ email });
+
+    if (!existingUser) {
+      return res.status(401).json({
+        message: "Invalid credentials!",
+      });
+    }
+
+    // 3. Check password
+    const isMatchPassword = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isMatchPassword) {
+      return res.status(401).json({
+        message: "Invalid credentials!",
+      });
+    }
+
+    // Create JWT Token & Response to client
+    const jwtPayload = {
+      email: existingUser.email,
+      id: existingUser.id,
+      fullname: existingUser.fullname,
+    };
+
+    const token = jwt.sign(jwtPayload, process.env.SECRET_KEY, {
+      expiresIn: "1h",
     });
-  }
 
-  //   2. Check authentication
-  const existingUser = userMockData.find(
-    (u) => u.username === username && u.password === password
-  );
-
-  if (!existingUser) {
-    return res.status(401).json({
-      message: "Invalid username or password!",
+    res.json({
+      accessToken: token,
+      message: "Login successfully",
     });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
   }
-
-  //   3. Generate access token (JWT)
-  //   - Header: thuật toán mã hoá(HS256) + loại token(JWT)
-  //   - Body: chứa thông tin mà developer muốn đính kèm vào token (Thông tin không nhạy cảm)
-  //   - Footer: chứa thông tin về chữ ký (khoá bí mật -> SECRET_KEY)
-  //   - Mỗi thành phần cách nhau bởi dấu "."
-
-  const jwtPayload = {
-    username: existingUser.username,
-    id: existingUser.id,
-    fullname: existingUser.fullname,
-  };
-
-  const token = jwt.sign(jwtPayload, process.env.SECRET_KEY, {
-    expiresIn: "30s",
-  });
-
-  res.json({
-    user: jwtPayload,
-    accessToken: token,
-  });
 });
 
 router.post("/register", async (req, res) => {
@@ -114,6 +104,14 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/me", (req, res) => {});
+// /api/v1/auth/me
+router.get("/me", authMiddleware, async (req, res) => {
+  const { id } = req.users;
+  const currentUser = await UserModel.findById(id).select("-password");
+
+  res.json({
+    userInfo: currentUser,
+  });
+});
 
 export default router;
