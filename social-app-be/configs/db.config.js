@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = "mongodb://0.0.0.0:27017/mindx-web70-social-apps";
+const MONGO_URI = process.env.MONGO_URI;
 
 export const connectToDB = async () => {
   try {

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import authAPI from "../../services/apis/authAPI";
 import { Navigate, useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext/AuthContext";
+import LayoutWrapper from "../../layouts/LayoutWrapper/LayoutWrapper";
 
 const initialValues = {
   email: "",
@@ -40,40 +41,78 @@ const RegisterPage = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="fullname">Fullname</label>
-          <input
-            name="fullname"
-            id="fullname"
-            onChange={handleChange}
-            value={values.fullname}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={values.email}
-          />
-        </div>
+    <LayoutWrapper>
+      <div className="flex justify-center items-center mt-[40px] md:mt-[100px]">
+        <div className="w-full max-w-md">
+          <form
+            className="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-4"
+            onSubmit={handleSubmit}
+          >
+            <h2 className="text-2xl text-center mb-6">Register an account</h2>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="fullname"
+              >
+                Fullname
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="fullname"
+                name="fullname"
+                type="text"
+                placeholder="Enter your fullname"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Enter your email"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                onChange={handleChange}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="id">Password</label>
-          <input
-            name="password"
-            id="password"
-            onChange={handleChange}
-            value={values.password}
-          />
+            {error && <p className="text-red-500 text-xs mb-4">{error}</p>}
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                type="submit"
+              >
+                {loading ? "Submitting..." : "Submit"}
+              </button>
+            </div>
+          </form>
+          <p className="text-center text-gray-500 text-xs">
+            &copy; 2023 Your Company. All rights reserved.
+          </p>
         </div>
-        {error && <p>{error}</p>}
-        <button disabled={!isValid}>{loading ? "Loading..." : "Submit"}</button>
-      </form>
-    </div>
+      </div>
+    </LayoutWrapper>
   );
 };
 

@@ -11,7 +11,6 @@ function App() {
   return (
     <BrowserRouter>
       <AuthState>
-        <Header />
         <Routes>
           <Route path="/" element={<PrivateRoute component={Home} />} />
           <Route path="/login" element={<LoginPage />} />
