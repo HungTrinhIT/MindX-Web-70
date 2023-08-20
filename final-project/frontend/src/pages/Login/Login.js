@@ -9,8 +9,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { handleLogin } = useContext(AuthContext);
-  const { auth } = useContext(AuthContext);
+  const { auth, handleLogin } = useContext(AuthContext);
 
   const formik = useFormik({
     initialValues: {
