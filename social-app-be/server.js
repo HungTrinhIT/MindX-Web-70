@@ -10,7 +10,6 @@ const whitelist = ["http://localhost:3000"];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    console.log("🚀 ~ file: server.js:13 ~ origin:", origin);
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
@@ -22,7 +21,7 @@ const corsOptions = {
 //Connect to database
 connectToDB();
 
-// global middlewares
+// Define globals middlewares
 app.use(express.json());
 app.use(cors(corsOptions));
 
