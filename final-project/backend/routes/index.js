@@ -5,6 +5,7 @@ import commentRouter from "./comments.route.js";
 import authRouter from "./auth.route.js";
 import logAPI from "../middlewares/logAPI.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
+import uploadRouter from "./upload.router.js";
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use("/auth", authRouter);
 router.use("/posts", authMiddleware, postRouter);
 router.use("/users", userRouter);
 router.use("/comments", commentRouter);
+router.use("/uploads", uploadRouter);
 
 export default router;
