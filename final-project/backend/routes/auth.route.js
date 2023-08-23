@@ -106,7 +106,7 @@ router.post("/register", async (req, res) => {
 
 // /api/v1/auth/me
 router.get("/me", authMiddleware, async (req, res) => {
-  const { id } = req.users;
+  const { id } = req.user;
   const currentUser = await UserModel.findById(id).select("-password");
 
   res.json({
