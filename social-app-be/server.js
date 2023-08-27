@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/index.js";
 import { connectToDB } from "./configs/db.config.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
+
 const app = express();
 const PORT = 3001;
 
@@ -27,6 +29,9 @@ app.use(cors("*"));
 
 // routes
 app.use("/api/v1", router);
+
+// Error handling
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running at PORT ${PORT}`);
