@@ -11,7 +11,7 @@ const AuthState = ({ children }) => {
 
   //   1. Call API /me => userInfo
   //   2. Update auth state
-  const handleLogin = async () => {
+  const fetchCurrentUser = async () => {
     try {
       const response = await authAPI.authInfo();
       const data = response.data;
@@ -25,6 +25,10 @@ const AuthState = ({ children }) => {
     }
   };
 
+  const handleLogin = async () => {
+    await fetchCurrentUser();
+  };
+
   const handleLogout = () => {
     setAuth({
       isAuthenticated: false,
@@ -34,9 +38,8 @@ const AuthState = ({ children }) => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
-    // Call API /me => check token => user, isAuthenticated
     if (accessToken) {
-      handleLogin();
+      fetchCurrentUser();
     }
   }, []);
 
@@ -46,6 +49,7 @@ const AuthState = ({ children }) => {
         auth,
         handleLogin,
         handleLogout,
+        fetchCurrentUser,
       }}
     >
       {children}

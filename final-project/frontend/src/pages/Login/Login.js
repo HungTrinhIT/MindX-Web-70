@@ -1,9 +1,17 @@
 import React, { useContext, useState } from "react";
-import { useFormik } from "formik";
-import axios from "axios";
+import { ErrorMessage, useFormik } from "formik";
+import * as yup from "yup";
 import { Navigate, useNavigate } from "react-router-dom";
 import authAPI from "../../apis/authAPI";
 import AuthContext from "../../contexts/AuthContext/AuthContext";
+
+const LoginFormValidationSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Email does not valid")
+    .required("Email is required"),
+  password: yup.string().required("Password is required"),
+});
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -37,35 +45,45 @@ const Login = () => {
         setLoading(false);
       }
     },
+    validationSchema: LoginFormValidationSchema,
   });
 
-  const { handleSubmit, handleChange, values } = formik;
+  const { handleSubmit, handleChange, values, isValid, errors } = formik;
 
   if (auth.isAuthenticated) {
     return <Navigate to="/" />;
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="d-flex justify-content-center align-items-center mt-5">
+      <form onSubmit={handleSubmit} className="p-4 rounded-2 shadow">
         <h4>Hello, welcome back to KBook</h4>
-        <div className="form-item">
+        <div className="mb-3">
           <label htmlFor="email">Email</label>
           <input
             name="email"
             id="email"
+            className="form-control"
             onChange={handleChange}
             value={values.email}
           />
+          {errors?.email && (
+            <small className="text-danger">{errors.email}</small>
+          )}
         </div>
-        <div className="form-item">
+        <div className="mb-3">
           <label htmlFor="password">Password</label>
           <input
             name="password"
+            className="form-control"
+            type="password"
             id="password"
             onChange={handleChange}
             value={values.password}
           />
+          {errors?.password && (
+            <small className="text-danger">{errors.password}</small>
+          )}
         </div>
         {error && (
           <p
@@ -77,25 +95,16 @@ const Login = () => {
             {error}
           </p>
         )}
-        <button type="submit">{loading ? "Loading..." : "Login"}</button>
+        <button
+          type="submit"
+          className="btn btn-primary w-100"
+          disabled={!isValid}
+        >
+          {loading ? "Submitting..." : "Submit"}
+        </button>
       </form>
     </div>
   );
 };
 
 export default Login;
-
-// Form
-// CORS: cross origin resource sharing
-//  mo cors
-//
-
-//  not authenticate
-//      X Homepage
-//      Login Register
-
-//  authenticate
-//      Homepage
-//      X Login Register
-
-// http://localhost:3000/api/v1/auth/me

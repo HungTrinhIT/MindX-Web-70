@@ -37,20 +37,35 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="d-flex justify-content-center align-items-center mt-5">
+      <form onSubmit={handleSubmit} className="p-4 rounded-2 shadow">
         <h3>Register an account</h3>
-        <div>
+        <div className="mb-3">
           <label htmlFor="fullname">Fullname</label>
-          <input id="fullname" name="fullname" onChange={handleChange} />
+          <input
+            id="fullname"
+            name="fullname"
+            onChange={handleChange}
+            className="form-control"
+          />
         </div>
-        <div>
+        <div className="mb-3">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" onChange={handleChange} />
+          <input
+            id="email"
+            name="email"
+            onChange={handleChange}
+            className="form-control"
+          />
         </div>
-        <div>
+        <div className="mb-3">
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" onChange={handleChange} />
+          <input
+            id="password"
+            name="password"
+            onChange={handleChange}
+            className="form-control"
+          />
         </div>
         {error && (
           <p
@@ -62,7 +77,9 @@ const Register = () => {
             {error}
           </p>
         )}
-        <button type="submit">{loading ? "Submitting..." : "Submit"}</button>
+        <button className="btn btn-primary w-100" type="submit">
+          {loading ? "Submitting..." : "Submit"}
+        </button>
       </form>
     </div>
   );
