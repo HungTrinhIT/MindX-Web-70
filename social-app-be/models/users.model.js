@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	password: { type: String, required: true },
+	password: { type: String, required: true, minLength: 6 },
 	createdAt: {
 		type: Date,
 		default: Date.now(),

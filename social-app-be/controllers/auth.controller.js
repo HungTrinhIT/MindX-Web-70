@@ -72,7 +72,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getMe = asyncHandler(async (req, res) => {
-	const { id: userId } = req.users;
+	const { id: userId } = req.user;
 
 	const existingUser = await UserModel.findById(userId).select('-password');
 	return res.json(existingUser);
