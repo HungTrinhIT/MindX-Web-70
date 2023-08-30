@@ -1,8 +1,8 @@
-import express from "express";
+import express from 'express';
 
 const router = express.Router();
 
 // Sign Up API
-router.post("/", (req, res) => {});
+router.post('/', (req, res) => {});
 
 export default router;
