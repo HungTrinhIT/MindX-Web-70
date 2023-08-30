@@ -1,5 +1,5 @@
 {
-	"name": "lesson02-expressjs-middlware",
+	"name": "social-app-backend",
 	"version": "1.0.0",
 	"description": "Learn expressjs and middleware",
 	"main": "server.js",
