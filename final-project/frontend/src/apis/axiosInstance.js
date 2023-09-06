@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "http://localhost:3001/api/v1";
+const BASE_URL = 'http://localhost:3001/api/v1';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -9,10 +9,10 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   // Get accessToken from local storage
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = localStorage.getItem('accessToken');
 
   if (accessToken) {
-    config.headers["x-access-token"] = accessToken;
+    config.headers['x-access-token'] = accessToken;
   }
 
   return config;

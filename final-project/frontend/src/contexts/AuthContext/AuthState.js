@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import AuthContext from "./AuthContext";
+import React, { useEffect, useState } from 'react';
+import AuthContext from './AuthContext';
 
-import authAPI from "../../apis/authAPI";
+import authAPI from '../../apis/authAPI';
 
 const AuthState = ({ children }) => {
   const [auth, setAuth] = useState({
@@ -37,7 +37,7 @@ const AuthState = ({ children }) => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       fetchCurrentUser();
     }

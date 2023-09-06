@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
-import userAPI from "../../apis/userAPI";
-import AuthContext from "../../contexts/AuthContext/AuthContext";
+import React, { useContext, useState } from 'react';
+import userAPI from '../../apis/userAPI';
+import AuthContext from '../../contexts/AuthContext/AuthContext';
 
 const UserProfile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -16,7 +16,7 @@ const UserProfile = () => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append("avatar", selectedFile);
+      formData.append('avatar', selectedFile);
 
       // Make the API request to upload the file
       await userAPI.uploadAvatar(formData);
@@ -37,13 +37,13 @@ const UserProfile = () => {
     <div>
       <h1>Upload avatar</h1>
       {loading && <p>Upload avatar in progress...</p>}
-      <input type="file" onChange={handleFileChange} accept="image/*" />
+      <input type='file' onChange={handleFileChange} accept='image/*' />
       <button onClick={handleUpload}>Upload avatar</button>
       <div>
         <img
-          style={{ width: "200px", height: "auto", objectFit: "cover" }}
-          alt="avatar"
-          src={user?.avatar || ""}
+          style={{ width: '200px', height: 'auto', objectFit: 'cover' }}
+          alt='avatar'
+          src={user?.avatar || ''}
         />
       </div>
     </div>

@@ -1,10 +1,10 @@
-import axiosInstance from "./axiosInstance";
+import axiosInstance from './axiosInstance';
 
 const userAPI = {
   uploadAvatar: (formData) =>
-    axiosInstance.post("/users/upload-avatar", formData, {
+    axiosInstance.post('/users/upload-avatar', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     }),
 };
